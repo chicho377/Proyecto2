@@ -153,6 +153,42 @@ string obtenerCalificacion(float promedioAdmision) {
     }
 }
 
+void mostrarEstadisticas() {
+    system("cls");
+    int admitidos = 0, enEspera = 0, noAdmitidos = 0;
+    float promedioAdmitidos = 0, promedioEnEspera = 0, promedioNoAdmitidos = 0;
+
+    for (int i = 0; i < cantidadEstudiantes; i++) {
+        Estudiante &est = estudiantes[i];
+        if (est.calificacion == "Admitido") {
+            admitidos++;
+            promedioAdmitidos += est.promedioAdmision;
+        } else if (est.calificacion == "En Espera") {
+            enEspera++;
+            promedioEnEspera += est.promedioAdmision;
+        } else if (est.calificacion == "No Admitido") {
+            noAdmitidos++;
+            promedioNoAdmitidos += est.promedioAdmision;
+        }
+    }
+
+    if (admitidos > 0) promedioAdmitidos /= admitidos;
+    if (enEspera > 0) promedioEnEspera /= enEspera;
+    if (noAdmitidos > 0) promedioNoAdmitidos /= noAdmitidos;
+
+    setColor(14); // Color Amarillo
+    gotoxy(10, 2); cout << "Estadisticas:";
+    gotoxy(10, 4); cout << "Cantidad Estudiantes Admitidos: " << admitidos;
+    gotoxy(10, 5); cout << "Promedio Estudiantes Admitidos: " << fixed << setprecision(2) << promedioAdmitidos;
+    gotoxy(10, 6); cout << "Cantidad Estudiantes En Espera: " << enEspera;
+    gotoxy(10, 7); cout << "Promedio Estudiantes En Espera: " << promedioEnEspera;
+    gotoxy(10, 8); cout << "Cantidad Estudiantes No Admitidos: " << noAdmitidos;
+    gotoxy(10, 9); cout << "Promedio Estudiantes No Admitidos: " << promedioNoAdmitidos;
+    setColor(7); // Color Blanco
+    gotoxy(10, 11); cout << "Pulse cualquier tecla para continuar...";
+    _getch();
+}
+
 int main(int argc, char** argv) {
 	return 0;
 }
