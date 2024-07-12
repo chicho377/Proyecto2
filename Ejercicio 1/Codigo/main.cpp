@@ -117,6 +117,42 @@ void ingresarDatos() {
     } while (continuar == 'S' || continuar == 's');
 }
 
+void calcularDatosEstudiante(Estudiante &est) {
+    est.edad = ANIO_ACTUAL - est.anioNacimiento;
+    est.promedioColegio = (est.promedioMatematicas + est.promedioEspanol + est.promedioCiencias + est.promedioEstudiosSociales) / 4.0;
+    est.porcentajeCriterioColegio = est.promedioColegio * 0.40;
+    est.porcentajeExamenAdmision = est.notaExamen * 0.60;
+    est.promedioAdmision = est.porcentajeCriterioColegio + est.porcentajeExamenAdmision;
+    est.calificacion = obtenerCalificacion(est.promedioAdmision);
+
+    // Mostrar informacion del estudiante
+    system("cls");
+    setColor(14); // Color Amarillo
+    gotoxy(10, 2); cout << "Informacion del Estudiante:";
+    gotoxy(10, 4); cout << "Cedula: " << est.cedula;
+    gotoxy(10, 5); cout << "Nombre: " << est.nombre;
+    gotoxy(10, 6); cout << "Anio de Nacimiento: " << est.anioNacimiento;
+    gotoxy(10, 7); cout << "Edad: " << est.edad;
+    gotoxy(10, 8); cout << "Promedio de Colegio: " << fixed << setprecision(2) << est.promedioColegio;
+    gotoxy(10, 9); cout << "Porcentaje Criterio Colegio: " << est.porcentajeCriterioColegio;
+    gotoxy(10, 10); cout << "Porcentaje Examen Admision: " << est.porcentajeExamenAdmision;
+    gotoxy(10, 11); cout << "Promedio Admision: " << est.promedioAdmision;
+    gotoxy(10, 12); cout << "Calificacion: " << est.calificacion;
+    setColor(7); // Color Blanco
+    gotoxy(10, 14); cout << "Pulse cualquier tecla para continuar...";
+    _getch();
+}
+
+string obtenerCalificacion(float promedioAdmision) {
+    if (promedioAdmision >= 85) {
+        return "Admitido";
+    } else if (promedioAdmision >= 75) {
+        return "En Espera";
+    } else {
+        return "No Admitido";
+    }
+}
+
 int main(int argc, char** argv) {
 	return 0;
 }
