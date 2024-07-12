@@ -189,6 +189,59 @@ void mostrarEstadisticas() {
     _getch();
 }
 
+void mostrarGrafico() {
+    system("cls");
+    int admitidos = 0, enEspera = 0, noAdmitidos = 0;
+
+    // Contar cantidad de estudiantes en cada categoría
+    for (int i = 0; i < cantidadEstudiantes; i++) {
+        Estudiante &est = estudiantes[i];
+        if (est.calificacion == "Admitido") {
+            admitidos++;
+        } else if (est.calificacion == "En Espera") {
+            enEspera++;
+        } else if (est.calificacion == "No Admitido") {
+            noAdmitidos++;
+        }
+    }
+
+    // Mostrar gráfico según cantidad de estudiantes en cada categoría
+    setColor(11); // Color Aqua
+    gotoxy(10, 2); cout << "Grafico Estudiantes segun Estado";
+    setColor(10); // Color Verde
+    gotoxy(10, 4); cout << "Admitidos: ";
+    hacerGraficos(admitidos, 4);
+    setColor(14); // Color Amarillo
+    gotoxy(10, 5); cout << "En Espera: ";
+    hacerGraficos(enEspera, 5);
+    setColor(12); // Color Rojo
+    gotoxy(7, 6); cout << "No Admitidos: ";
+    hacerGraficos(noAdmitidos, 6);
+    setColor(7); // Color Blanco
+    gotoxy(10, 10); cout << "Pulse cualquier tecla para regresar al menu.";
+    _getch();
+}
+
+void hacerGraficos(int cantidad, int y) {
+    int j = 20;
+    for (int i = 0; i < cantidad; i++) {
+        gotoxy(j++, y);
+        printf("%c", 178); // Carácter de bloque sólido en la consola
+    }
+}
+
+void gotoxy(int x, int y) {
+    COORD coord;
+    coord.X = x;
+    coord.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+
+void setColor(int color) {
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+}
+
 int main(int argc, char** argv) {
+	mostrarMenu();
 	return 0;
 }
