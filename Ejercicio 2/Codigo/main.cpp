@@ -167,6 +167,43 @@ void verEstadisticasVehiculos() {
     cin.ignore().get();  // esperar a que el usuario pulse una tecla
 }
 
+// funcion para ver estadisticas de vehiculos lavados segun tipo de lavado
+void verEstadisticasLavados() {
+    int cantidadSoloLavado = 0, cantidadCompleto = 0;
+    int dineroSoloLavado = 0, dineroCompleto = 0;
+
+    // recorrer el arreglo de vehiculos para calcular las estadisticas
+    for (int i = 0; i < numVehiculos; i++) {
+        switch (vehiculos[i].tipoLavado) {
+            case 1:
+                cantidadSoloLavado++;
+                dineroSoloLavado += vehiculos[i].precio;
+                break;
+            case 2:
+                cantidadCompleto++;
+                dineroCompleto += vehiculos[i].precio;
+                break;
+        }
+    }
+
+    // mostrar las estadisticas
+    system("cls");
+    setColor(11);
+    gotoxy(20, 2); cout << "*******************************";
+    gotoxy(20, 3); cout << "*  Estadisticas por Lavado    *";
+    gotoxy(20, 4); cout << "*******************************";
+    setColor(14);
+    gotoxy(22, 6); cout << "Cantidad de Vehiculos con Solo Lavado: " << cantidadSoloLavado;
+    gotoxy(22, 7); cout << "Dinero Recaudado por Vehiculos con Solo Lavado: " << dineroSoloLavado << " colones";
+    gotoxy(22, 8); cout << "Promedio Dinero Recaudado por Vehiculos con Solo Lavado: " << (cantidadSoloLavado > 0 ? dineroSoloLavado / cantidadSoloLavado : 0) << " colones";
+    gotoxy(22, 9); cout << "Cantidad de Vehiculos con Lavado, Aspirado y Encerado: " << cantidadCompleto;
+    gotoxy(22, 10); cout << "Dinero Recaudado por Vehiculos con Lavado, Aspirado y Encerado: " << dineroCompleto << " colones";
+    gotoxy(22, 11); cout << "Promedio Dinero Recaudado por Vehiculos con Lavado, Aspirado y Encerado: " << (cantidadCompleto > 0 ? dineroCompleto / cantidadCompleto : 0) << " colones";
+    setColor(15);
+    gotoxy(22, 13); cout << "<Pulse tecla para regresar al menu>";
+    cin.ignore().get();  // esperar a que el usuario pulse una tecla
+}
+
 int main(int argc, char** argv) {
 	return 0;
 }
