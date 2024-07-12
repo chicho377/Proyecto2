@@ -204,6 +204,86 @@ void verEstadisticasLavados() {
     cin.ignore().get();  // esperar a que el usuario pulse una tecla
 }
 
+// funcion para ver grafico de vehiculos lavados por tipo de vehiculo
+void verGraficoVehiculos() {
+    int cantidadSencillos = 0, cantidad4x4 = 0, cantidadMicrobus = 0;
+
+    // recorrer el arreglo de vehiculos para calcular las cantidades
+    for (int i = 0; i < numVehiculos; i++) {
+        switch (vehiculos[i].tipoVehiculo) {
+            case 1:
+                cantidadSencillos++;
+                break;
+            case 2:
+                cantidad4x4++;
+                break;
+            case 3:
+                cantidadMicrobus++;
+                break;
+        }
+    }
+
+    // mostrar el grafico
+    system("cls");
+    setColor(11);
+    gotoxy(20, 2); cout << "*******************************";
+    gotoxy(20, 3); cout << "*   Grafico por Vehiculo     *";
+    gotoxy(20, 4); cout << "*******************************";
+    setColor(14);
+    gotoxy(22, 6); cout << "Veh. Sencillos: ";
+    hacer_graficos(cantidadSencillos, 6);
+    gotoxy(22, 7); cout << "Veh. 4x4: ";
+    hacer_graficos(cantidad4x4, 7);
+    gotoxy(22, 8); cout << "Veh. Pesados: ";
+    hacer_graficos(cantidadMicrobus, 8);
+    setColor(15);
+    gotoxy(22, 10); cout << "<Pulse tecla para regresar al menu>";
+    cin.ignore().get();  // esperar a que el usuario pulse una tecla
+}
+
+// funcion para ver grafico de vehiculos lavados por tipo de lavado
+void verGraficoLavados() {
+    int cantidadSoloLavado = 0, cantidadCompleto = 0;
+
+    // recorrer el arreglo de vehiculos para calcular las cantidades
+    for (int i = 0; i < numVehiculos; i++) {
+        switch (vehiculos[i].tipoLavado) {
+            case 1:
+                cantidadSoloLavado++;
+                break;
+            case 2:
+                cantidadCompleto++;
+                break;
+        }
+    }
+
+    // mostrar el grafico
+    system("cls");
+    setColor(11);
+    gotoxy(20, 2); cout << "*******************************";
+    gotoxy(20, 3); cout << "*   Grafico por Lavado       *";
+    gotoxy(20, 4); cout << "*******************************";
+    setColor(14);
+    gotoxy(22, 6); cout << "Sencillo: ";
+    hacer_graficos(cantidadSoloLavado, 6);
+    gotoxy(22, 7); cout << "Completo: ";
+    hacer_graficos(cantidadCompleto, 7);
+    setColor(15);
+    gotoxy(22, 9); cout << "<Pulse tecla para regresar al menu>";
+    cin.ignore().get();  // esperar a que el usuario pulse una tecla
+}
+
+// funcion para hacer los graficos
+void hacer_graficos(int a, int y) {
+    int i;
+    int j = 40;
+    for (i = 1; i <= a; i++) {
+        gotoxy(j, y);
+        printf("%c", 178);
+        j++;
+    }
+}
+
 int main(int argc, char** argv) {
 	return 0;
 }
