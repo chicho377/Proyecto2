@@ -285,5 +285,32 @@ void hacer_graficos(int a, int y) {
 }
 
 int main(int argc, char** argv) {
+	int opcion;
+    do {
+        mostrarMenu();
+        cin >> opcion;
+        switch(opcion) {
+            case 1:
+                ingresarDatosVehiculos();
+                break;
+            case 2:
+                verEstadisticasVehiculos();
+                break;
+            case 3:
+                verEstadisticasLavados();
+                break;
+            case 4:
+                verGraficoVehiculos();
+                break;
+            case 5:
+                verGraficoLavados();
+                break;
+            case 6:
+                cout << "Saliendo del programa...\n";
+                break;
+            default:
+                cout << "Opcion invalida. Intente de nuevo.\n";
+        }
+    } while (opcion != 6);
 	return 0;
 }
