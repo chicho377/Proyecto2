@@ -22,6 +22,17 @@ Vehiculo vehiculos[MAX_VEHICULOS];
 int numVehiculos = 0;
 int numFactura = 1;
 
+// prototipos de funciones
+void gotoxy(int x, int y);
+void setColor(int color);
+void mostrarMenu();
+void ingresarDatosVehiculos();
+void verEstadisticasVehiculos();
+void verEstadisticasLavados();
+void verGraficoVehiculos();
+void verGraficoLavados();
+void hacer_graficos(int a, int y);
+
 int main(int argc, char** argv) {
 	return 0;
 }
