@@ -78,6 +78,45 @@ void mostrarMenu() {
     } while (opcion != 4);
 }
 
+void ingresarDatos() {
+    char continuar;
+    do {
+        if (cantidadEstudiantes >= MAX_ESTUDIANTES) {
+            gotoxy(10, 11); cout << "Se ha alcanzado el limite maximo de estudiantes.\n";
+            break;
+        }
+
+        Estudiante &est = estudiantes[cantidadEstudiantes];
+        gotoxy(10, 11); cout << "Ingrese la cedula del estudiante: ";
+        cin >> est.cedula;
+        gotoxy(10, 12); cout << "Ingrese el nombre del estudiante: ";
+        cin.ignore();
+        getline(cin, est.nombre);
+        gotoxy(10, 13); cout << "Ingrese el anio de nacimiento del estudiante: ";
+        cin >> est.anioNacimiento;
+        gotoxy(10, 14); cout << "Ingrese el promedio final de Matematicas: ";
+        cin >> est.promedioMatematicas;
+        gotoxy(10, 15); cout << "Ingrese el promedio final de Espanol: ";
+        cin >> est.promedioEspanol;
+        gotoxy(10, 16); cout << "Ingrese el promedio final de Ciencias: ";
+        cin >> est.promedioCiencias;
+        gotoxy(10, 17); cout << "Ingrese el promedio final de Estudios Sociales: ";
+        cin >> est.promedioEstudiosSociales;
+        gotoxy(10, 18); cout << "Ingrese la nota del examen de admision: ";
+        cin >> est.notaExamen;
+
+        calcularDatosEstudiante(est);
+        cantidadEstudiantes++;
+
+        gotoxy(10, 19); cout << "Datos del estudiante ingresados correctamente.\n";
+        gotoxy(10, 20); cout << "Desea continuar (S/N)? ";
+        cin >> continuar;
+
+        // Limpiar el buffer de entrada para evitar problemas con getline
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    } while (continuar == 'S' || continuar == 's');
+}
+
 int main(int argc, char** argv) {
 	return 0;
 }
