@@ -126,6 +126,47 @@ void ingresarDatosVehiculos() {
     } while (continuar == 'S' || continuar == 's');
 }
 
+// funcion para ver estadisticas de vehiculos lavados segun tipo de vehiculo
+void verEstadisticasVehiculos() {
+    int cantidadSencillos = 0, cantidad4x4 = 0, cantidadMicrobus = 0;
+    int dineroSencillos = 0, dinero4x4 = 0, dineroMicrobus = 0;
+
+    // recorrer el arreglo de vehiculos para calcular las estadisticas
+    for (int i = 0; i < numVehiculos; i++) {
+        switch (vehiculos[i].tipoVehiculo) {
+            case 1:
+                cantidadSencillos++;
+                dineroSencillos += vehiculos[i].precio;
+                break;
+            case 2:
+                cantidad4x4++;
+                dinero4x4 += vehiculos[i].precio;
+                break;
+            case 3:
+                cantidadMicrobus++;
+                dineroMicrobus += vehiculos[i].precio;
+                break;
+        }
+    }
+
+    // mostrar las estadisticas
+    system("cls");
+    setColor(11);
+    gotoxy(20, 2); cout << "*******************************";
+    gotoxy(20, 3); cout << "*  Estadisticas por Vehiculo  *";
+    gotoxy(20, 4); cout << "*******************************";
+    setColor(14);
+    gotoxy(22, 6); cout << "Cantidad de Vehiculos Tipo Sencillos: " << cantidadSencillos;
+    gotoxy(22, 7); cout << "Dinero Recaudado por Vehiculos Tipo Sencillos: " << dineroSencillos << " colones";
+    gotoxy(22, 8); cout << "Cantidad de Vehiculos Tipo 4x4: " << cantidad4x4;
+    gotoxy(22, 9); cout << "Dinero Recaudado por Vehiculos Tipo 4x4: " << dinero4x4 << " colones";
+    gotoxy(22, 10); cout << "Cantidad de Vehiculos Tipo Microbus o Camion: " << cantidadMicrobus;
+    gotoxy(22, 11); cout << "Dinero Recaudado por Vehiculos Tipo Microbus o Camion: " << dineroMicrobus << " colones";
+    setColor(15);
+    gotoxy(22, 13); cout << "<Pulse tecla para regresar al menu>";
+    cin.ignore().get();  // esperar a que el usuario pulse una tecla
+}
+
 int main(int argc, char** argv) {
 	return 0;
 }
