@@ -46,6 +46,24 @@ void setColor(int color) {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 }
 
+// Funcion para mostrar el menu principal
+void mostrarMenu() {
+    system("cls");
+    setColor(11);
+    gotoxy(20, 2); cout << "***************************";
+    gotoxy(20, 3); cout << "*      Menu Principal     *";
+    gotoxy(20, 4); cout << "***************************";
+    setColor(14);
+    gotoxy(22, 6); cout << "1- Ingresar Datos Vehiculos";
+    gotoxy(22, 7); cout << "2- Ver Estadisticas Vehiculos Lavados";
+    gotoxy(22, 8); cout << "3- Ver Estadisticas Lavados";
+    gotoxy(22, 9); cout << "4- Ver Grafico Vehiculos Lavados";
+    gotoxy(22, 10); cout << "5- Ver Grafico Lavados";
+    gotoxy(22, 11); cout << "6- Salir";
+    setColor(15);
+    gotoxy(22, 13); cout << "Seleccione una opcion: ";
+}
+
 int main(int argc, char** argv) {
 	return 0;
 }
