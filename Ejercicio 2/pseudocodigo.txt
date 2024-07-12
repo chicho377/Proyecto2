@@ -1,0 +1,278 @@
+Inicio
+    Constantes
+        MAX_VEHICULOS <- 100
+
+    Estructura Vehiculo
+        placa: cadena
+        marca: cadena
+        modelo: cadena
+        tipoVehiculo: entero
+        tipoLavado: entero
+        precio: entero
+    
+    Variables Globales
+        vehiculos[MAX_VEHICULOS]: arreglo de Vehiculo
+        numVehiculos: entero
+        numFactura: entero
+
+    Función mostrarMenu()
+        Inicio
+            Repetir
+                Limpiar pantalla
+                setColor(11) // Color Aqua
+                gotoxy(20, 2); imprimir "***************************"
+                gotoxy(20, 3); imprimir "*      Menu Principal     *"
+                gotoxy(20, 4); imprimir "***************************"
+                setColor(14) // Color Amarillo
+                gotoxy(22, 6); imprimir "1- Ingresar Datos Vehiculos"
+                gotoxy(22, 7); imprimir "2- Ver Estadisticas Vehiculos Lavados"
+                gotoxy(22, 8); imprimir "3- Ver Estadisticas Lavados"
+                gotoxy(22, 9); imprimir "4- Ver Grafico Vehiculos Lavados"
+                gotoxy(22, 10); imprimir "5- Ver Grafico Lavados"
+                gotoxy(22, 11); imprimir "6- Salir"
+                setColor(15) // Color Blanco
+                gotoxy(22, 13); imprimir "Seleccione una opcion: "
+                leer opcion
+
+                Según opcion Hacer
+                    Caso 1:
+                        llamar ingresarDatosVehiculos()
+                    Caso 2:
+                        llamar verEstadisticasVehiculos()
+                    Caso 3:
+                        llamar verEstadisticasLavados()
+                    Caso 4:
+                        llamar verGraficoVehiculos()
+                    Caso 5:
+                        llamar verGraficoLavados()
+                    Caso 6:
+                        imprimir "Saliendo del programa...\n"
+                    De Otro Modo:
+                        imprimir "Opcion invalida. Intente de nuevo.\n"
+                Fin Según
+            Mientras opcion ≠ 6
+        Fin Función
+
+    Función ingresarDatosVehiculos()
+        Inicio
+            Carácter continuar
+            Repetir
+                Si numVehiculos ≥ MAX_VEHICULOS Entonces
+                    gotoxy(22, 15); imprimir "Se ha alcanzado el limite maximo de vehiculos.\n"
+                    Romper
+                Fin Si
+
+                Vehiculo &veh ← vehiculos[numVehiculos]
+                Limpiar pantalla
+                setColor(11) // Color Aqua
+                gotoxy(20, 2); imprimir "*******************************"
+                gotoxy(20, 3); imprimir "*   Ingresar Datos Vehiculos  *"
+                gotoxy(20, 4); imprimir "*******************************"
+                setColor(14) // Color Amarillo
+                gotoxy(22, 6); imprimir "Ingrese el numero de placa: "
+                leer veh.placa
+                gotoxy(22, 7); imprimir "Ingrese la marca: "
+                leer veh.marca
+                gotoxy(22, 8); imprimir "Ingrese el modelo: "
+                leer veh.modelo
+                gotoxy(22, 9); imprimir "Ingrese el tipo de vehiculo (1=Sencillo, 2=4x4, 3=Microbus o Camion): "
+                leer veh.tipoVehiculo
+                gotoxy(22, 10); imprimir "Ingrese el tipo de lavado (1=Solo Lavado, 2=Lavado, Aspirado y Encerado): "
+                leer veh.tipoLavado
+
+                // Calcular precio basado en tipoVehiculo y tipoLavado
+                Según veh.tipoVehiculo Hacer
+                    Caso 1:
+                        veh.precio ← (veh.tipoLavado == 1) ? 3000 : 5000
+                    Caso 2:
+                        veh.precio ← (veh.tipoLavado == 1) ? 5000 : 7000
+                    Caso 3:
+                        veh.precio ← (veh.tipoLavado == 1) ? 7000 : 12000
+                    De Otro Modo:
+                        gotoxy(22, 11); imprimir "Tipo de vehiculo invalido.\n"
+                        Continuar // Volver al inicio del bucle do-while
+                Fin Según
+
+                // Mostrar los datos ingresados
+                setColor(15) // Color Blanco
+                gotoxy(22, 13); imprimir "Factura #" + numFactura
+                gotoxy(22, 14); imprimir "Placa: " + veh.placa
+                gotoxy(22, 15); imprimir "Marca: " + veh.marca
+                gotoxy(22, 16); imprimir "Modelo: " + veh.modelo
+                gotoxy(22, 17); imprimir "Tipo de vehiculo: " + (
+                    (veh.tipoVehiculo == 1) ? "Sencillo" : 
+                    (veh.tipoVehiculo == 2) ? "4x4" : 
+                    "Microbus o Camion"
+                )
+                gotoxy(22, 18); imprimir "Tipo de lavado: " + (
+                    (veh.tipoLavado == 1) ? "Solo Lavado" : 
+                    "Lavado, Aspirado y Encerado"
+                )
+                gotoxy(22, 19); imprimir "Precio a pagar: " + veh.precio + " colones"
+
+                numVehiculos ← numVehiculos + 1
+
+                setColor(14) // Color Amarillo
+                gotoxy(22, 21); imprimir "Desea continuar? (S/N): "
+                leer continuar
+
+                Limpiar buffer de entrada para evitar problemas con getline
+                ignorarEntrada()
+            Mientras continuar = 'S' o continuar = 's'
+        Fin Función
+
+    Función verEstadisticasVehiculos()
+        Inicio
+            enteros cantidadSencillos ← 0, cantidad4x4 ← 0, cantidadMicrobus ← 0
+            enteros dineroSencillos ← 0, dinero4x4 ← 0, dineroMicrobus ← 0
+
+            Para cada i desde 0 hasta numVehiculos - 1 Hacer
+                Según vehiculos[i].tipoVehiculo Hacer
+                    Caso 1:
+                        cantidadSencillos ← cantidadSencillos + 1
+                        dineroSencillos ← dineroSencillos + vehiculos[i].precio
+                    Caso 2:
+                        cantidad4x4 ← cantidad4x4 + 1
+                        dinero4x4 ← dinero4x4 + vehiculos[i].precio
+                    Caso 3:
+                        cantidadMicrobus ← cantidadMicrobus + 1
+                        dineroMicrobus ← dineroMicrobus + vehiculos[i].precio
+                Fin Según
+            Fin Para
+
+            Limpiar pantalla
+            setColor(11) // Color Aqua
+            gotoxy(20, 2); imprimir "*******************************"
+            gotoxy(20, 3); imprimir "*  Estadisticas por Vehiculo  *"
+            gotoxy(20, 4); imprimir "*******************************"
+            setColor(14) // Color Amarillo
+            gotoxy(22, 6); imprimir "Cantidad de Vehiculos Tipo Sencillos: " + cantidadSencillos
+            gotoxy(22, 7); imprimir "Dinero Recaudado por Vehiculos Tipo Sencillos: " + dineroSencillos + " colones"
+            gotoxy(22, 8); imprimir "Cantidad de Vehiculos Tipo 4x4: " + cantidad4x4
+            gotoxy(22, 9); imprimir "Dinero Recaudado por Vehiculos Tipo 4x4: " + dinero4x4 + " colones"
+            gotoxy(22, 10); imprimir "Cantidad de Vehiculos Tipo Microbus o Camion: " + cantidadMicrobus
+            gotoxy(22, 11); imprimir "Dinero Recaudado por Vehiculos Tipo Microbus o Camion: " + dineroMicrobus + " colones"
+            setColor(15) // Color Blanco
+            gotoxy(22, 13); imprimir "<Pulse tecla para regresar al menu>"
+            esperarTecla()
+        Fin Función
+
+    Función verEstadisticasLavados()
+        Inicio
+            enteros cantidadSoloLavado ← 0, cantidadCompleto ← 0
+            enteros dineroSoloLavado ← 0, dineroCompleto ← 0
+
+            Para cada i desde 0 hasta numVehiculos - 1 Hacer
+                Según vehiculos[i].tipoLavado Hacer
+                    Caso 1:
+                        cantidadSoloLavado ← cantidadSoloLavado + 1
+                        dineroSoloLavado ← dineroSoloLavado + vehiculos[i].precio
+                    Caso 2:
+                        cantidadCompleto ← cantidadCompleto + 1
+                        dineroCompleto ← dineroCompleto + vehiculos[i].precio
+                Fin Según
+            Fin Para
+
+            Limpiar pantalla
+            setColor(11) // Color Aqua
+            gotoxy(20, 2); imprimir "*******************************"
+            gotoxy(20, 3); imprimir "*  Estadisticas por Lavado    *"
+            gotoxy(20, 4); imprimir "*******************************"
+            setColor(14) // Color Amarillo
+            gotoxy(22, 6); imprimir "Cantidad de Vehiculos con Solo Lavado: " + cantidadSoloLavado
+            gotoxy(22, 7); imprimir "Dinero Recaudado por Vehiculos con Solo Lavado: " + dineroSoloLavado + " colones"
+            gotoxy(22, 8); imprimir "Promedio Dinero Recaudado por Vehiculos con Solo Lavado: " + (
+                (cantidadSoloLavado > 0) ? dineroSoloLavado / cantidadSoloLavado : 0
+            ) + " colones"
+            gotoxy(22, 9); imprimir "Cantidad de Vehiculos con Lavado, Aspirado y Encerado: " + cantidadCompleto
+            gotoxy(22, 10); imprimir "Dinero Recaudado por Vehiculos con Lavado, Aspirado y Encerado: " + dineroCompleto + " colones"
+            gotoxy(22, 11); imprimir "Promedio Dinero Recaudado por Vehiculos con Lavado, Aspirado y Encerado: " + (
+                (cantidadCompleto > 0) ? dineroCompleto / cantidadCompleto : 0
+            ) + " colones"
+            setColor(15) // Color Blanco
+            gotoxy(22, 13); imprimir "<Pulse tecla para regresar al menu>"
+            esperarTecla()
+        Fin Función
+
+    Función verGraficoVehiculos()
+        Inicio
+            enteros cantidadSencillos ← 0, cantidad4x4 ← 0, cantidadMicrobus ← 0
+
+            Para cada i desde 0 hasta numVehiculos - 1 Hacer
+                Según vehiculos[i].tipoVehiculo Hacer
+                    Caso 1:
+                        cantidadSencillos ← cantidadSencillos + 1
+                    Caso 2:
+                        cantidad4x4 ← cantidad4x4 + 1
+                    Caso 3:
+                        cantidadMicrobus ← cantidadMicrobus + 1
+                Fin Según
+
+            Limpiar pantalla
+            setColor(11) // Color Aqua
+            gotoxy(20, 2); imprimir "*******************************"
+            gotoxy(20, 3); imprimir "*   Grafico por Vehiculo     *"
+            gotoxy(20, 4); imprimir "*******************************"
+            setColor(14) // Color Amarillo
+            gotoxy(22, 6); imprimir "Veh. Sencillos: "
+            hacer_graficos(cantidadSencillos, 6)
+            gotoxy(22, 7); imprimir "Veh. 4x4: "
+            hacer_graficos(cantidad4x4, 7)
+            gotoxy(22, 8); imprimir "Veh. Pesados: "
+            hacer_graficos(cantidadMicrobus, 8)
+            setColor(15) // Color Blanco
+            gotoxy(22, 10); imprimir "<Pulse tecla para regresar al menu>"
+            esperarTecla()
+        Fin Función
+
+    Función verGraficoLavados()
+        Inicio
+            enteros cantidadSoloLavado ← 0, cantidadCompleto ← 0
+
+            Para cada i desde 0 hasta numVehiculos - 1 Hacer
+                Según vehiculos[i].tipoLavado Hacer
+                    Caso 1:
+                        cantidadSoloLavado ← cantidadSoloLavado + 1
+                    Caso 2:
+                        cantidadCompleto ← cantidadCompleto + 1
+                Fin Según
+
+            Limpiar pantalla
+            setColor(11) // Color Aqua
+            gotoxy(20, 2); imprimir "*******************************"
+            gotoxy(20, 3); imprimir "*   Grafico por Lavado       *"
+            gotoxy(20, 4); imprimir "*******************************"
+            setColor(14) // Color Amarillo
+            gotoxy(22, 6); imprimir "Sencillo: "
+            hacer_graficos(cantidadSoloLavado, 6)
+            gotoxy(22, 7); imprimir "Completo: "
+            hacer_graficos(cantidadCompleto, 7)
+            setColor(15) // Color Blanco
+            gotoxy(22, 9); imprimir "<Pulse tecla para regresar al menu>"
+            esperarTecla()
+        Fin Función
+
+    Función hacer_graficos(entero a, entero y)
+        Inicio
+            entero i
+            entero j ← 40
+            Para i desde 1 hasta a Hacer
+                gotoxy(j, y)
+                imprimir "█" // Carácter de bloque sólido en la consola
+                j ← j + 1
+            Fin Para
+        Fin Función
+
+    Función ignorarEntrada()
+        Inicio
+            limpiar buffer de entrada hasta nueva línea
+        Fin Función
+
+    Función esperarTecla()
+        Inicio
+            esperar a que el usuario presione una tecla
+        Fin Función
+
+    // Programa principal
+    mostrarMenu()
+Fin

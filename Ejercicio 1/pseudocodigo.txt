@@ -1,0 +1,245 @@
+Inicio
+    Constantes
+        ANIO_ACTUAL <- 2024
+        MAX_ESTUDIANTES <- 100
+    
+    Estructura Estudiante
+        cedula: cadena
+        nombre: cadena
+        anioNacimiento: entero
+        promedioMatematicas: real
+        promedioEspanol: real
+        promedioCiencias: real
+        promedioEstudiosSociales: real
+        notaExamen: real
+        edad: entero
+        promedioColegio: real
+        porcentajeCriterioColegio: real
+        porcentajeExamenAdmision: real
+        promedioAdmision: real
+        calificacion: cadena
+    
+    Variables Globales
+        estudiantes[MAX_ESTUDIANTES]: arreglo de Estudiante
+        cantidadEstudiantes: entero
+    
+    Función mostrarMenu()
+        Inicio
+            Repetir
+                Limpiar pantalla
+                setColor(11) // Color Aqua
+                gotoxy(10, 2); imprimir "Menu Principal"
+                gotoxy(10, 4); imprimir "1) Ingresar Datos"
+                gotoxy(10, 5); imprimir "2) Estadisticas"
+                gotoxy(10, 6); imprimir "3) Grafico"
+                gotoxy(10, 7); imprimir "4) Salir"
+                setColor(7) // Color Blanco
+                imprimir "Ingrese su Opcion: "
+                leer opcion
+                
+                Según opcion Hacer
+                    Caso 1:
+                        llamar ingresarDatos()
+                    Caso 2:
+                        llamar mostrarEstadisticas()
+                    Caso 3:
+                        llamar mostrarGrafico()
+                    Caso 4:
+                        gotoxy(10, 11); imprimir "Saliendo...\n"
+                    De Otro Modo:
+                        gotoxy(10, 11); imprimir "Opcion no valida. Intente de nuevo.\n"
+                Fin Según
+            Mientras opcion ≠ 4
+        Fin Función
+    
+    Función ingresarDatos()
+        Inicio
+            Carácter continuar
+            Repetir
+                Si cantidadEstudiantes ≥ MAX_ESTUDIANTES Entonces
+                    gotoxy(10, 11); imprimir "Se ha alcanzado el limite maximo de estudiantes.\n"
+                    Romper
+                Fin Si
+
+                Estudiante &est ← estudiantes[cantidadEstudiantes]
+                gotoxy(10, 11); imprimir "Ingrese la cedula del estudiante: "
+                leer est.cedula
+                gotoxy(10, 12); imprimir "Ingrese el nombre del estudiante: "
+                ignorarEntrada()
+                leer línea est.nombre
+                gotoxy(10, 13); imprimir "Ingrese el anio de nacimiento del estudiante: "
+                leer est.anioNacimiento
+                gotoxy(10, 14); imprimir "Ingrese el promedio final de Matematicas: "
+                leer est.promedioMatematicas
+                gotoxy(10, 15); imprimir "Ingrese el promedio final de Espanol: "
+                leer est.promedioEspanol
+                gotoxy(10, 16); imprimir "Ingrese el promedio final de Ciencias: "
+                leer est.promedioCiencias
+                gotoxy(10, 17); imprimir "Ingrese el promedio final de Estudios Sociales: "
+                leer est.promedioEstudiosSociales
+                gotoxy(10, 18); imprimir "Ingrese la nota del examen de admision: "
+                leer est.notaExamen
+
+                llamar calcularDatosEstudiante(est)
+                cantidadEstudiantes ← cantidadEstudiantes + 1
+
+                gotoxy(10, 19); imprimir "Datos del estudiante ingresados correctamente.\n"
+                gotoxy(10, 20); imprimir "Desea continuar (S/N)? "
+                leer continuar
+
+                Limpiar buffer de entrada para evitar problemas con getline
+                ignorarEntrada()
+            Mientras continuar = 'S' o continuar = 's'
+        Fin Función
+    
+    Función calcularDatosEstudiante(Estudiante &est)
+        Inicio
+            est.edad ← ANIO_ACTUAL - est.anioNacimiento
+            est.promedioColegio ← (est.promedioMatematicas + est.promedioEspanol + est.promedioCiencias + est.promedioEstudiosSociales) / 4.0
+            est.porcentajeCriterioColegio ← est.promedioColegio * 0.40
+            est.porcentajeExamenAdmision ← est.notaExamen * 0.60
+            est.promedioAdmision ← est.porcentajeCriterioColegio + est.porcentajeExamenAdmision
+            est.calificacion ← obtenerCalificacion(est.promedioAdmision)
+
+            Limpiar pantalla
+            setColor(14) // Color Amarillo
+            gotoxy(10, 2); imprimir "Informacion del Estudiante:"
+            gotoxy(10, 4); imprimir "Cedula: " + est.cedula
+            gotoxy(10, 5); imprimir "Nombre: " + est.nombre
+            gotoxy(10, 6); imprimir "Anio de Nacimiento: " + est.anioNacimiento
+            gotoxy(10, 7); imprimir "Edad: " + est.edad
+            gotoxy(10, 8); imprimir "Promedio de Colegio: " + est.promedioColegio con 2 decimales
+            gotoxy(10, 9); imprimir "Porcentaje Criterio Colegio: " + est.porcentajeCriterioColegio
+            gotoxy(10, 10); imprimir "Porcentaje Examen Admision: " + est.porcentajeExamenAdmision
+            gotoxy(10, 11); imprimir "Promedio Admision: " + est.promedioAdmision
+            gotoxy(10, 12); imprimir "Calificacion: " + est.calificacion
+            setColor(7) // Color Blanco
+            gotoxy(10, 14); imprimir "Pulse cualquier tecla para continuar..."
+            esperarTecla()
+        Fin Función
+    
+    Función obtenerCalificacion(promedioAdmision: real): cadena
+        Inicio
+            Si promedioAdmision ≥ 85 Entonces
+                devolver "Admitido"
+            Sino Si promedioAdmision ≥ 75 Entonces
+                devolver "En Espera"
+            De Otro Modo
+                devolver "No Admitido"
+            Fin Si
+        Fin Función
+    
+    Función mostrarEstadisticas()
+        Inicio
+            Limpiar pantalla
+            enteros admitidos ← 0, enEspera ← 0, noAdmitidos ← 0
+            reales promedioAdmitidos ← 0, promedioEnEspera ← 0, promedioNoAdmitidos ← 0
+
+            Para cada i desde 0 hasta cantidadEstudiantes - 1 Hacer
+                Estudiante &est ← estudiantes[i]
+                Según est.calificacion Hacer
+                    Caso "Admitido":
+                        admitidos ← admitidos + 1
+                        promedioAdmitidos ← promedioAdmitidos + est.promedioAdmision
+                    Caso "En Espera":
+                        enEspera ← enEspera + 1
+                        promedioEnEspera ← promedioEnEspera + est.promedioAdmision
+                    Caso "No Admitido":
+                        noAdmitidos ← noAdmitidos + 1
+                        promedioNoAdmitidos ← promedioNoAdmitidos + est.promedioAdmision
+                Fin Según
+            Fin Para
+
+            Si admitidos > 0 Entonces
+                promedioAdmitidos ← promedioAdmitidos / admitidos
+            Fin Si
+            Si enEspera > 0 Entonces
+                promedioEnEspera ← promedioEnEspera / enEspera
+            Fin Si
+            Si noAdmitidos > 0 Entonces
+                promedioNoAdmitidos ← promedioNoAdmitidos / noAdmitidos
+            Fin Si
+
+            setColor(14) // Color Amarillo
+            gotoxy(10, 2); imprimir "Estadisticas:"
+            gotoxy(10, 4); imprimir "Cantidad Estudiantes Admitidos: " + admitidos
+            gotoxy(10, 5); imprimir "Promedio Estudiantes Admitidos: " + promedioAdmitidos con 2 decimales
+            gotoxy(10, 6); imprimir "Cantidad Estudiantes En Espera: " + enEspera
+            gotoxy(10, 7); imprimir "Promedio Estudiantes En Espera: " + promedioEnEspera con 2 decimales
+            gotoxy(10, 8); imprimir "Cantidad Estudiantes No Admitidos: " + noAdmitidos
+            gotoxy(10, 9); imprimir "Promedio Estudiantes No Admitidos: " + promedioNoAdmitidos con 2 decimales
+            setColor(7) // Color Blanco
+            gotoxy(10, 11); imprimir "Pulse cualquier tecla para continuar..."
+            esperarTecla()
+        Fin Función
+    
+    Función mostrarGrafico()
+        Inicio
+            Limpiar pantalla
+            enteros admitidos ← 0, enEspera ← 0, noAdmitidos ← 0
+
+            Para cada i desde 0 hasta cantidadEstudiantes - 1 Hacer
+                Estudiante &est ← estudiantes[i]
+                Según est.calificacion Hacer
+                    Caso "Admitido":
+                        admitidos ← admitidos + 1
+                    Caso "En Espera":
+                        enEspera ← enEspera + 1
+                    Caso "No Admitido":
+                        noAdmitidos ← noAdmitidos + 1
+                Fin Según
+            Fin Para
+
+            setColor(11) // Color Aqua
+            gotoxy(10, 2); imprimir "Grafico Estudiantes segun Estado"
+            setColor(10) // Color Verde
+            gotoxy(10, 4); imprimir "Admitidos: "
+            hacerGraficos(admitidos, 4)
+            setColor(14) // Color Amarillo
+            gotoxy(10, 5); imprimir "En Espera: "
+            hacerGraficos(enEspera, 5)
+            setColor(12) // Color Rojo
+            gotoxy(7, 6); imprimir "No Admitidos: "
+            hacerGraficos(noAdmitidos, 6)
+            setColor(7) // Color Blanco
+            gotoxy(10, 10); imprimir "Pulse cualquier tecla para regresar al menu."
+            esperarTecla()
+        Fin Función
+    
+    Función hacerGraficos(cantidad: entero, y: entero)
+        Inicio
+            entero j ← 20
+            Para cada i desde 0 hasta cantidad - 1 Hacer
+                gotoxy(j, y)
+                imprimir "█" // Carácter de bloque sólido en la consola
+                j ← j + 1
+            Fin Para
+        Fin Función
+    
+    Función gotoxy(x: entero, y: entero)
+        Inicio
+            COORD coord
+            coord.X ← x
+            coord.Y ← y
+            SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord)
+        Fin Función
+    
+    Función setColor(color: entero)
+        Inicio
+            SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color)
+        Fin Función
+    
+    // Funciones auxiliares
+    Función ignorarEntrada()
+        Inicio
+            limpiar buffer de entrada hasta nueva línea
+        Fin Función
+    
+    Función esperarTecla()
+        Inicio
+            esperar a que el usuario presione una tecla
+        Fin Función
+
+    // Programa principal
+    mostrarMenu()
+Fin
