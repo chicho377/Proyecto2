@@ -111,7 +111,7 @@ void ingresarDatos() {
         gotoxy(10, 19); cout << "Datos del estudiante ingresados correctamente.\n";
         gotoxy(10, 20); cout << "Desea continuar (S/N)? ";
         cin >> continuar;
-
+	system("cls");
         // Limpiar el buffer de entrada para evitar problemas con getline
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     } while (continuar == 'S' || continuar == 's');
@@ -193,7 +193,7 @@ void mostrarGrafico() {
     system("cls");
     int admitidos = 0, enEspera = 0, noAdmitidos = 0;
 
-    // Contar cantidad de estudiantes en cada categoría
+    // Contar cantidad de estudiantes en cada categorÃ­a
     for (int i = 0; i < cantidadEstudiantes; i++) {
         Estudiante &est = estudiantes[i];
         if (est.calificacion == "Admitido") {
@@ -205,7 +205,7 @@ void mostrarGrafico() {
         }
     }
 
-    // Mostrar gráfico según cantidad de estudiantes en cada categoría
+    // Mostrar grÃ¡fico segÃºn cantidad de estudiantes en cada categorÃ­a
     setColor(11); // Color Aqua
     gotoxy(10, 2); cout << "Grafico Estudiantes segun Estado";
     setColor(10); // Color Verde
@@ -226,7 +226,7 @@ void hacerGraficos(int cantidad, int y) {
     int j = 20;
     for (int i = 0; i < cantidad; i++) {
         gotoxy(j++, y);
-        printf("%c", 178); // Carácter de bloque sólido en la consola
+        printf("%c", 178); // CarÃ¡cter de bloque sÃ³lido en la consola
     }
 }
 
